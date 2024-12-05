@@ -51,7 +51,7 @@ inline void Job::UpdateStatus() {
         }
     }
 
-    for (auto i = remove_index.size(); i > 0; --i) {
+    for (size_t i = 0 ; i < remove_index.size(); ++i) {
         current_tasks_.erase(current_tasks_.begin() + remove_index[i]);
     }
 }
@@ -63,14 +63,14 @@ inline void Job::SortTasks() {
 
     std::vector<int> prev_task_count(tasks_.size(), 0);
 
-    for (auto&& [name, prevs] : contact_map_) {
-        for (auto&& prev : prevs) {
-            prev_task_count[task_map_[prev]]++;
+    for (auto&& [name, nexts] : contact_map_) {
+        for (auto && next : nexts) {
+            prev_task_count[task_map_[next]]++;
         }
     }
 
     for (auto i = 0; i < prev_task_count.size(); ++i) {
-        if (prev_task_count[i] == 0) {
+        if (prev_task_count[i] == 0 && tasks_[i]->is_done == false) {
             current_tasks_.push_back(tasks_[i]);
         }
     }
@@ -81,6 +81,7 @@ inline void Job::SortTasks() {
 inline void Job::AddTask(std::shared_ptr<ITask> task, const std::string& task_name) {
     task->name = task_name;
     tasks_.push_back(task);
+    task_map_[task_name] = tasks_.size() - 1;
 }
 
 inline void Job::ContactMap(const std::string& name, const std::vector<std::string>& prev, const std::vector<std::string>& next) {

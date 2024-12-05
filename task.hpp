@@ -5,6 +5,7 @@
 #include <functional>
 #include <utility>
 #include <stdexcept>
+#include <iostream>
 
 class ITaskResult {};
 
@@ -44,8 +45,6 @@ public:
 
 /// @brief Task that adds two numbers
 class AddTask : public ITask {
-    int a_{};
-    int b_{};
 public:
     AddTask() = default;
 
@@ -57,7 +56,21 @@ public:
         auto b = std::static_pointer_cast<NumberGeneratorResult>(prev_result_[1])->number_;
         result_ = std::make_shared<NumberGeneratorResult>();
         auto result = std::static_pointer_cast<NumberGeneratorResult>(result_);
-        result->number_ = a_ + b_;
+        result->number_ = a + b;
     }
 };
 
+
+/// @brief print task
+class PrintNumberTask : public ITask {
+public:
+    PrintNumberTask() = default;
+
+    void Execute() override {
+        if (prev_result_.size() != 1) {
+            throw std::runtime_error("PrintNumberTask needs one previous result");
+        }
+        auto a = std::static_pointer_cast<NumberGeneratorResult>(prev_result_[0])->number_;
+        std::cout << "Number: " << a << std::endl;
+    }
+};

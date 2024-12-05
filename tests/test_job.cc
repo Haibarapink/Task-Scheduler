@@ -17,9 +17,13 @@ public:
 
         job.ContactMap("add", {"gen1", "gen2"}, {});
 
+        std::shared_ptr<PrintNumberTask> print_task = std::make_shared<PrintNumberTask>();
+        job.AddTask(print_task, "print");
+        job.ContactMap("print", {"add"}, {});
+
         /// Sort
         job.SortTasks();
-        S_ASSERT(job.current_tasks_.size() != 2);
+        S_ASSERT(job.current_tasks_.size() == 2);
         /// Execute
         for (auto& task : job.current_tasks_) {
             task->Execute();
@@ -33,8 +37,24 @@ public:
         S_ASSERT(job.current_tasks_.size() == 1);
         job.UpdateStatus();
 
+        auto cur_task = job.current_tasks_;
+        for (auto i : cur_task) {
+            i->Execute();
+            i->is_done = true;
+        }
 
+        job.UpdateStatus();
 
+        job.SortTasks();
+        S_ASSERT(job.current_tasks_.size() == 1);
+        for (auto i : job.current_tasks_) {
+            i->Execute();
+            i->is_done = true;
+        }
+
+        job.UpdateStatus();
+        S_ASSERT(job.finished_tasks_num_ == 4);
+        S_ASSERT(job.IsFinished());
     }
 
 };

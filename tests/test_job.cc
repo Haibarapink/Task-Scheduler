@@ -1,6 +1,8 @@
 #include "../job.hpp"
 #include <cassert>
 
+#define S_ASSERT(x) if (!(x)) { printf("Test failed %d\n", __LINE__); assert(false); }
+
 class JobTester {
 public:
     void TestSort() {
@@ -17,13 +19,19 @@ public:
 
         /// Sort
         job.SortTasks();
-
-        if (job.current_tasks_.size() != 2) {
-            printf("TestSort failed\n");
-            assert(false);
-        }
-
+        S_ASSERT(job.current_tasks_.size() != 2);
         /// Execute
+        for (auto& task : job.current_tasks_) {
+            task->Execute();
+            task->is_done = true;
+        }
+        job.UpdateStatus();
+        S_ASSERT(job.finished_tasks_num_ == 2);
+        /// Check
+        S_ASSERT(job.current_tasks_.size() == 0);
+        job.SortTasks();
+        S_ASSERT(job.current_tasks_.size() == 1);
+        job.UpdateStatus();
 
 
 

@@ -39,6 +39,12 @@ inline void Job::UpdateStatus() {
     for (auto &task : current_tasks_) {
         p++;
         if (task->is_done) {
+            /// 添加result到下一个task
+            for (auto&& next : contact_map_[task->name]) {
+                auto next_task = GetTask(next);
+                next_task->AppendPrevResult(task->result_);
+            }
+
             finished_tasks_num_++;
             contact_map_.erase(task->name);
             remove_index.push_back(p);

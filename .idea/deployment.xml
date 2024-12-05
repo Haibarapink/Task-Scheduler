@@ -2,21 +2,21 @@
 <project version="4">
   <component name="PublishConfigData" remoteFilesAllowedToDisappearOnAutoupload="false">
     <serverData>
-      <paths name="314-server (27068d05-d1f1-407b-a993-7fe568bde4ff)">
+      <paths name="Remote Host (3a2b1b2b-1548-4ed4-a3bc-fbe0c96b6ef4)">
         <serverdata>
           <mappings>
-            <mapping deploy="/tmp/tmp.rpRpxfBuK6" local="$PROJECT_DIR$" />
+            <mapping deploy="/tmp/Task-Scheduler" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="本地虚拟机 (9369739b-3f22-42bd-b233-973a789d71d3)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/tmp/tmp.0797XkICo4" local="$PROJECT_DIR$" />
           </mappings>
           <excludedPaths>
             <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug" />
           </excludedPaths>
-        </serverdata>
-      </paths>
-      <paths name="local-vm (f39c453a-a9be-46f8-8d78-e6dc48c81047)">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
-          </mappings>
         </serverdata>
       </paths>
     </serverData>

@@ -14,7 +14,7 @@ protected:
 
     std::vector<std::shared_ptr<ITask>> current_tasks_;
 
-    size_t finished_tasks_num_;
+    size_t finished_tasks_num_{0};
 private:
     inline std::shared_ptr<ITask> GetTask(const std::string& name) {
         return tasks_[task_map_[name]];

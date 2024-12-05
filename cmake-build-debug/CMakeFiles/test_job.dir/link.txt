@@ -1,1 +1,0 @@
-/usr/bin/c++ -g CMakeFiles/test_job.dir/tests/test_job.cc.o -o test_job 
